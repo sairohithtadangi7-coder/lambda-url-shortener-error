@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>URL Shortener</title>
+<style>
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg,#6e8efb,#a777e3);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    width:350px;
+    text-align:center;
+}
+
+input{
+    width:90%;
+    padding:10px;
+    margin:10px 0;
+}
+
+button{
+    padding:10px 20px;
+    background:#6e8efb;
+    border:none;
+    color:white;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>URL Shortener</h2>
+
+<input id="urlInput" placeholder="Enter URL">
+
+<button onclick="shorten()">Shorten URL</button>
+
+<p id="result"></p>
+
+</div>
+
+<script>
+
+async function shorten(){
+
+let longUrl=document.getElementById("urlInput").value;
+
+let response=await fetch("YOUR_API_GATEWAY_URL/shorten",{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify({url:longUrl})
+});
+
+let data=await response.json();
+
+document.getElementById("result").innerHTML=
+"Short URL: "+data.short_url;
+
+}
+
+</script>
+
+</body>
+</html>
