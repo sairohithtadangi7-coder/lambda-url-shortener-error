@@ -73,39 +73,38 @@ async function shorten(){
 let longUrl = document.getElementById("urlInput").value;
 
 if(!longUrl){
-document.getElementById("result").innerHTML = "Please enter a URL";
+document.getElementById("result").innerHTML="Please enter a URL";
 return;
 }
 
 try{
 
 let response = await fetch("https://008jmqrlo7.execute-api.us-east-1.amazonaws.com/shorten",{
+
 method:"POST",
+
 headers:{
 "Content-Type":"application/json"
 },
+
 body:JSON.stringify({
-long_url: longUrl
+
+url: longUrl   // ✅ THIS IS THE FIX
+
 })
+
 });
 
 let data = await response.json();
 
-/* FIX SHORT URL PATH */
-
-let shortCode = data.short_url.split("/").pop();
-
-let fixedUrl = window.location.origin + "/lambda-url-shortener-error/" + shortCode;
-
 document.getElementById("result").innerHTML =
-"Short URL: <a href='"+fixedUrl+"' target='_blank'>"+fixedUrl+"</a>";
+"Short URL: <a href='"+data.short_url+"' target='_blank'>"+data.short_url+"</a>";
 
 }
 
 catch(error){
 
-document.getElementById("result").innerHTML =
-"Error connecting to API";
+document.getElementById("result").innerHTML="Error connecting to API";
 
 }
 
