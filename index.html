@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <meta charset="UTF-8">
@@ -14,6 +15,7 @@ body{
     justify-content:center;
     align-items:center;
     height:100vh;
+    margin:0;
 }
 
 .container{
@@ -22,12 +24,15 @@ body{
     border-radius:10px;
     width:350px;
     text-align:center;
+    box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
 input{
     width:90%;
     padding:10px;
     margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
 }
 
 button{
@@ -36,6 +41,11 @@ button{
     border:none;
     color:white;
     cursor:pointer;
+    border-radius:5px;
+}
+
+button:hover{
+    background:#5a75e6;
 }
 
 </style>
@@ -50,6 +60,8 @@ button{
 
 <input id="urlInput" placeholder="Enter URL">
 
+<input id="aliasInput" placeholder="Custom alias (optional)">
+
 <br><br>
 
 <button onclick="shorten()">Shorten URL</button>
@@ -63,6 +75,7 @@ button{
 async function shorten(){
 
 let longUrl = document.getElementById("urlInput").value;
+let alias = document.getElementById("aliasInput").value;
 
 if(!longUrl){
 document.getElementById("result").innerHTML="Please enter a URL";
@@ -79,7 +92,8 @@ headers:{
 "Content-Type":"application/json"
 },
 body:JSON.stringify({
-url: longUrl
+url: longUrl,
+alias: alias
 })
 }
 );
@@ -101,4 +115,5 @@ document.getElementById("result").innerHTML="Error connecting to API";
 </script>
 
 </body>
+
 </html>
