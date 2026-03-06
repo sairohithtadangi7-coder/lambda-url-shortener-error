@@ -1,3 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>URL Shortener</title>
+
+<style>
+
+body{
+    font-family: Arial;
+    background: linear-gradient(135deg,#6e8efb,#a777e3);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.container{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    width:350px;
+    text-align:center;
+}
+
+input{
+    width:90%;
+    padding:10px;
+    margin:10px 0;
+}
+
+button{
+    padding:10px 20px;
+    background:#6e8efb;
+    border:none;
+    color:white;
+    cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>URL Shortener</h2>
+
+<input id="urlInput" placeholder="Enter URL">
+
+<br><br>
+
+<button onclick="shorten()">Shorten URL</button>
+
+<p id="result"></p>
+
+</div>
+
 <script>
 
 async function shorten(){
@@ -11,7 +71,9 @@ return;
 
 try{
 
-let response = await fetch("https://008jmqrlo7.execute-api.us-east-1.amazonaws.com/shorten",{
+let response = await fetch(
+"https://008jmqrlo7.execute-api.us-east-1.amazonaws.com/shorten",
+{
 method:"POST",
 headers:{
 "Content-Type":"application/json"
@@ -19,22 +81,24 @@ headers:{
 body:JSON.stringify({
 url: longUrl
 })
-});
+}
+);
 
 let data = await response.json();
 
-/* FIX: parse lambda body */
-let parsed = JSON.parse(data.body);
-
 document.getElementById("result").innerHTML =
-"Short URL: <a href='"+parsed.short_url+"' target='_blank'>"+parsed.short_url+"</a>";
+"Short URL: <a href='"+data.short_url+"' target='_blank'>"+data.short_url+"</a>";
 
 }
-
 catch(error){
+
 document.getElementById("result").innerHTML="Error connecting to API";
+
 }
 
 }
 
 </script>
+
+</body>
+</html>
