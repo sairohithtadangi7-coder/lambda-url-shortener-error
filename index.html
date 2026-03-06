@@ -81,19 +81,13 @@ return;
 try{
 
 let response = await fetch("https://008jmqrlo7.execute-api.us-east-1.amazonaws.com/shorten",{
-
 method:"POST",
-
 headers:{
 "Content-Type":"application/json"
 },
-
 body:JSON.stringify({
-
-url: longUrl   // ✅ THIS IS THE FIX
-
+url: longUrl
 })
-
 });
 
 let data = await response.json();
@@ -104,9 +98,7 @@ document.getElementById("result").innerHTML =
 }
 
 catch(error){
-
 document.getElementById("result").innerHTML="Error connecting to API";
-
 }
 
 }
