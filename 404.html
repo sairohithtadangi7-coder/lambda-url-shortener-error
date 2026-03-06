@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+var path = window.location.pathname.split("/").pop();
+
+if(path){
+window.location.href="/lambda-url-shortener-error/?code="+path;
+}
+</script>
+</head>
+<body>
+Redirecting...
+</body>
+</html>
