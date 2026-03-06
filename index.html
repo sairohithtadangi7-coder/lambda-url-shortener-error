@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>URL Shortener </title>
-<!-- rebuild -->
+
+<title>URL Shortener</title>
+
 <style>
 
 body{
@@ -53,7 +54,7 @@ button:hover{
 
 <div class="container">
 
-<h2>URL Shortener </h2>
+<h2>URL Shortener</h2>
 
 <input id="urlInput" placeholder="Enter URL">
 
@@ -71,6 +72,11 @@ async function shorten(){
 
 let longUrl = document.getElementById("urlInput").value;
 
+if(!longUrl){
+document.getElementById("result").innerHTML = "Please enter a URL";
+return;
+}
+
 try{
 
 let response = await fetch("https://008jmqrlo7.execute-api.us-east-1.amazonaws.com/shorten",{
@@ -85,8 +91,14 @@ long_url: longUrl
 
 let data = await response.json();
 
+/* FIX SHORT URL PATH */
+
+let shortCode = data.short_url.split("/").pop();
+
+let fixedUrl = window.location.origin + "/lambda-url-shortener-error/" + shortCode;
+
 document.getElementById("result").innerHTML =
-"Short URL: <a href='"+data.short_url+"' target='_blank'>"+data.short_url+"</a>";
+"Short URL: <a href='"+fixedUrl+"' target='_blank'>"+fixedUrl+"</a>";
 
 }
 
